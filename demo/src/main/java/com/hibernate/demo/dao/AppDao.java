@@ -2,6 +2,7 @@ package com.hibernate.demo.dao;
 
 import com.hibernate.demo.entity.Instructor;
 import com.hibernate.demo.entity.InstructorDetail;
+import com.hibernate.demo.entity.Student;
 import com.hibernate.demo.entity.Course;
 import java.util.List;
 
@@ -16,4 +17,10 @@ public interface AppDao {
     Instructor findInstructorByIdJoinFetch(int theId);
     void update(Instructor in);
     void deleteCourseById(int theId);
+    void save(Course theCourse);
+    Course findCourseAndReviewsByCourseId(int theId);
+    Course findCourseAndStudentByCourseId(int theId);
+    Student findStudentAndCoursesByStudentId(int theId);
+    void update(Student student);
+    void deleteStudentById(int theId);
 }
