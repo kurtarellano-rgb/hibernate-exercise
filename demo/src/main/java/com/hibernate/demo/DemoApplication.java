@@ -1,16 +1,8 @@
-
 package com.hibernate.demo;
 
-import java.util.List;
-
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-
 import com.hibernate.demo.dao.AppDao;
-import com.hibernate.demo.entity.Course;
 // import com.hibernate.demo.dao.StudentDao;
+import com.hibernate.demo.entity.Course;
 import com.hibernate.demo.entity.Instructor;
 import com.hibernate.demo.entity.InstructorDetail;
 // import com.hibernate.demo.entity.Student;
@@ -19,6 +11,12 @@ import com.hibernate.demo.entity.Student;
 
 import jakarta.transaction.Transactional;
 
+import java.util.List;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 /**
  * Application entry point for the Hibernate student management demo.
@@ -29,11 +27,18 @@ public class DemoApplication {
     /**
      * Starts the Spring Boot application.
      *
+     * @param args the command-line arguments
      */
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
     }
 
+    /**
+     * Creates a command-line runner for database operations.
+     *
+     * @param app the data access object used for database operations
+     * @return a runner that executes the selected database operation
+     */
     @Bean
     CommandLineRunner commandLineRunner(AppDao app) {
         return runner -> {
@@ -59,6 +64,11 @@ public class DemoApplication {
         };
     }
 
+    /**
+     * Creates an instructor with details and saves the instructor.
+     *
+     * @param app the data access object used to save the instructor
+     */
     private void createInstructor(AppDao app) {
         // create the instructor and details
         Instructor ins = new Instructor("Vicky",
@@ -74,9 +84,14 @@ public class DemoApplication {
         app.save(ins);
     }
 
+    /**
+     * Retrieves and displays an instructor by ID.
+     *
+     * @param app the data access object used to find the instructor
+     */
     private void findInstructor(AppDao app) {
         int id = 2;
-        System.out.println("Find id: " +id);
+        System.out.println("Find id: " + id);
 
         Instructor ins = app.findInstructorById(id);
 
@@ -84,15 +99,25 @@ public class DemoApplication {
         System.out.println("Details: " + ins.getInstructorDeets());
     }
 
-    @Transactional 
+    /**
+     * Deletes an instructor by ID.
+     *
+     * @param app the data access object used to delete the instructor
+     */
+    @Transactional
     private void deleteInstructor(AppDao app) {
         int id = 8;
-        System.out.println("Delete id: " +id);
+        System.out.println("Delete id: " + id);
 
         app.deleteInstructorById(id);
         System.out.println("Deleted Succesfully!");
     }
 
+    /**
+     * Retrieves and displays instructor details by ID.
+     *
+     * @param app the data access object used to find instructor details
+     */
     private void findInstructorDetail(AppDao app) {
         int id = 3;
         InstructorDetail inDeets = app.findInstructorDetailById(id);
@@ -101,14 +126,24 @@ public class DemoApplication {
         System.out.println("Instructor: " + inDeets.getInstructor());
     }
 
+    /**
+     * Deletes instructor details by ID.
+     *
+     * @param app the data access object used to delete instructor details
+     */
     private void deleteInstructorDetail(AppDao app) {
         int id = 11;
-        System.out.println("Delete id: " +id);
+        System.out.println("Delete id: " + id);
 
         app.deleteInstructorDetailById(id);
         System.out.println("Deleted Succesfully!");
     }
 
+    /**
+     * Creates and saves an instructor with details and courses.
+     *
+     * @param app the data access object used to save the instructor
+     */
     private void createInstructorWithCourses(AppDao app) {
         // create the instructor and details
         Instructor ins = new Instructor("Migil",
@@ -118,17 +153,22 @@ public class DemoApplication {
                 "Creating Problems");
 
         ins.setInstructorDeets(deets);
-        
+
         Course course1 = new Course("Nihonggo");
         Course course2 = new Course("Tech");
 
         ins.add(course1);
         ins.add(course2);
 
-        System.out.println("Courses Saved!" +ins.getCourses());
+        System.out.println("Courses Saved!" + ins.getCourses());
         app.save(ins);
     }
 
+    /**
+     * Retrieves and displays the courses for an instructor.
+     *
+     * @param app the data access object used to find the instructor and courses
+     */
     private void findCoursesForInstructor(AppDao app) {
         int id = 25;
 
@@ -145,6 +185,11 @@ public class DemoApplication {
         System.out.println(ins.getCourses());
     }
 
+    /**
+     * Retrieves and displays an instructor and courses using JOIN FETCH.
+     *
+     * @param app the data access object used to retrieve the instructor
+     */
     private void findInstructorWithCoursesJoinFetch(AppDao app) {
         int id = 25;
         System.out.println("find instructor id: " + id);
@@ -155,6 +200,11 @@ public class DemoApplication {
         System.out.println("Courses: " + ins.getCourses());
     }
 
+    /**
+     * Updates an instructor's last name.
+     *
+     * @param app the data access object used to update the instructor
+     */
     private void updateInstructor(AppDao app) {
         int id = 3;
         System.out.println("Find instructor id: " + id);
@@ -167,6 +217,11 @@ public class DemoApplication {
         System.out.println("Updated Instructor: " + ins);
     }
 
+    /**
+     * Deletes an instructor by ID.
+     *
+     * @param app the data access object used to delete the instructor
+     */
     private void deleteInstructorOnly(AppDao app) {
         int id = 24;
         System.out.println("Delete Instructor: " + id);
@@ -175,15 +230,23 @@ public class DemoApplication {
         System.out.println("Deleted Successfully!");
     }
 
+    /**
+     * Deletes a course by ID.
+     *
+     * @param app the data access object used to delete the course
+     */
     private void deleteCourseById(AppDao app) {
         int id = 1;
         app.deleteCourseById(id);
-        System.out.println("Course Deleted! " +id);
-
+        System.out.println("Course Deleted! " + id);
     }
 
+    /**
+     * Creates and saves a course with reviews.
+     *
+     * @param app the data access object used to save the course
+     */
     private void createCourseAndReviews(AppDao app) {
-
         Course course = new Course("How to Speed Run Spring in 1 Day");
 
         course.addReview(new Review("Great speed 2x...loved it!!!"));
@@ -194,6 +257,11 @@ public class DemoApplication {
         app.save(course);
     }
 
+    /**
+     * Retrieves and displays a course and its reviews.
+     *
+     * @param app the data access object used to retrieve the course
+     */
     private void retrieveCourseAndReviews(AppDao app) {
         int id = 21;
         System.out.println("Get course and reviews from id: " + id);
@@ -208,6 +276,11 @@ public class DemoApplication {
         System.out.println(course.getReview());
     }
 
+    /**
+     * Deletes a course and its associated reviews by ID.
+     *
+     * @param app the data access object used to delete the course
+     */
     private void deleteCourseAndReviews(AppDao app) {
         int id = 2;
         System.out.println("Delete course: " + id);
@@ -216,12 +289,18 @@ public class DemoApplication {
         System.out.println("Deleted successfully!");
     }
 
+    /**
+     * Creates a course with students and saves the course.
+     *
+     * @param app the data access object used to save the course
+     */
     private void createCourseAndStudents(AppDao app) {
-
         Course course = new Course("How to Be a Fullstack Dev in Half A Day");
 
-        Student student1 = new Student("Light", "Yagami", "light.yagami@example.com");
-        Student student2 = new Student("Leslie", "Andrews", "leslie.andrews@example.com");
+        Student student1 = new Student(
+                "Light", "Yagami", "light.yagami@example.com");
+        Student student2 = new Student(
+                "Leslie", "Andrews", "leslie.andrews@example.com");
 
         course.addStudent(student1);
         course.addStudent(student2);
@@ -230,6 +309,11 @@ public class DemoApplication {
         System.out.println("Successfully enrolled!");
     }
 
+    /**
+     * Retrieves and displays a course and its students.
+     *
+     * @param app the data access object used to retrieve the course
+     */
     private void findCourseAndStudents(AppDao app) {
         int id = 22;
         Course course = app.findCourseAndStudentByCourseId(id);
@@ -238,6 +322,11 @@ public class DemoApplication {
         System.out.println("Students: " + course.getStudents());
     }
 
+    /**
+     * Retrieves and displays a student and their courses.
+     *
+     * @param app the data access object used to retrieve the student
+     */
     private void findStudentAndCourses(AppDao app) {
         int id = 2;
         Student student = app.findStudentAndCoursesByStudentId(id);
@@ -246,6 +335,11 @@ public class DemoApplication {
         System.out.println("Courses: " + student.getCourses());
     }
 
+    /**
+     * Adds courses to an existing student and updates the student.
+     *
+     * @param app the data access object used to retrieve and update the student
+     */
     private void addMoreCoursesForStudent(AppDao app) {
         int id = 2;
         Student student = app.findStudentAndCoursesByStudentId(id);
@@ -263,6 +357,11 @@ public class DemoApplication {
         app.update(student);
     }
 
+    /**
+     * Deletes a student by ID.
+     *
+     * @param app the data access object used to delete the student
+     */
     private void deleteStudent(AppDao app) {
         int id = 2;
         System.out.println("Delete student: " + id);
@@ -270,7 +369,7 @@ public class DemoApplication {
         app.deleteStudentById(id);
         System.out.println("Deleted successfully!");
     }
-     
+
     /**
      * Executes student database operations when the application starts.
      *
