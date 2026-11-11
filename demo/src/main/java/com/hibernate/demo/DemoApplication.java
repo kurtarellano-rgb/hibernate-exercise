@@ -167,7 +167,6 @@ public class DemoApplication {
     /**
      * Retrieves and displays the courses for an instructor.
      *
-     * @param app the data access object used to find the instructor and courses
      */
     private void findCoursesForInstructor(AppDao app) {
         int id = 25;
@@ -251,7 +250,8 @@ public class DemoApplication {
 
         course.addReview(new Review("Great speed 2x...loved it!!!"));
         course.addReview(new Review("I wanted the speed 0.75x :(("));
-        course.addReview(new Review("Hoping to do a speed of 3x :D. Anyways, nice!"));
+        course.addReview(new Review("Hoping to do a speed of 3x" 
+                                            +  ":D. Anyways, nice!"));
 
         System.out.println("Course saved!");
         app.save(course);
@@ -338,7 +338,6 @@ public class DemoApplication {
     /**
      * Adds courses to an existing student and updates the student.
      *
-     * @param app the data access object used to retrieve and update the student
      */
     private void addMoreCoursesForStudent(AppDao app) {
         int id = 2;
