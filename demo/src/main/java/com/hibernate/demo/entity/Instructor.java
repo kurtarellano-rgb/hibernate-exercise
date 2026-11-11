@@ -51,7 +51,7 @@ public class Instructor {
     /** The list of courses assigned to the instructor. */
     @OneToMany(
             mappedBy = "instructor",
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = {
                     CascadeType.DETACH,
                     CascadeType.MERGE,

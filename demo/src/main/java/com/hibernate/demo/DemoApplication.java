@@ -49,6 +49,7 @@ public class DemoApplication {
             // deleteInstructorDetail(app);
             // createInstructorWithCourses(app);
             // findCoursesForInstructor(app);
+            findInstructorWithCourses(app);
             // findInstructorWithCoursesJoinFetch(app);
             // updateInstructor(app);
             // deleteInstructorOnly(app);
@@ -60,8 +61,23 @@ public class DemoApplication {
             // findCourseAndStudents(app);
             // findStudentAndCourses(app);
             // addMoreCoursesForStudent(app);
-            deleteStudent(app);
+            // deleteStudent(app);
         };
+    }
+
+    /* Retrieves an instructor along with their associated courses from the database 
+        and prints their details to the console. */
+    private void findInstructorWithCourses(AppDao app) {
+
+        int id = 2;
+        System.out.println("Finding instructor id: " + id);
+
+        Instructor ins = app.findInstructorById(id);
+
+        System.out.println("Instructor: " + ins);
+        System.out.println("Courses: " + ins.getCourses());
+
+        System.out.println("Done!");
     }
 
     /**
